@@ -5,13 +5,22 @@ on:
     branches:
       - main
   pull_request:
-    branches:
-      - main
 
 jobs:
   build:
     name: Analisis de SonarQube
     runs-on: ubuntu-latest
+
+    services:
+      sonarqube:
+        image: sonarqube:latest
+        ports:
+          - 9000:9000
+        options: >-
+          --health-cmd="curl -f http://localhost:9000 || exit 1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
 
     steps:
       - name: Clonar repositorio
@@ -29,6 +38,17 @@ jobs:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
+
+      - name: Esperar a que SonarQube esté listo
+        run: |
+          for i in {1..10}; do
+            if curl -s http://localhost:9000/api/system/health | grep -q '"status":"UP"'; then
+              echo "SonarQube está listo";
+              break;
+            fi
+            echo "Esperando a que SonarQube esté listo... $i";
+            sleep 10;
+          done
 
       - name: Ejecutar análisis SonarQube
         env:
