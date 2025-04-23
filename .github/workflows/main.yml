@@ -1,61 +1,29 @@
-name: Analisis de SonarQube
-
+name: SonarQube
 on:
   push:
     branches:
       - main
   pull_request:
-
+    types: [opened, synchronize, reopened]
 jobs:
   build:
-    name: Analisis de SonarQube
+    name: Build and analyze
     runs-on: ubuntu-latest
-
-    services:
-      sonarqube:
-        image: sonarqube:latest
-        ports:
-          - 9000:9000
-        options: >-
-          --health-cmd="curl -f http://localhost:9000 || exit 1"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
-
+    env:
+      BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory # Directory where build-wrapper output will be placed
     steps:
-      - name: Clonar repositorio
-        uses: actions/checkout@v3
-
-      - name: Configurar Java
-        uses: actions/setup-java@v3
+      - uses: actions/checkout@v4
         with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Cache de SonarQube
-        uses: actions/cache@v3
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-
-      - name: Esperar a que SonarQube esté listo
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Install Build Wrapper
+        uses: SonarSource/sonarqube-scan-action/install-build-wrapper@v5
+      - name: Run Build Wrapper
         run: |
-          for i in {1..20}; do
-            if curl -s http://localhost:9000/api/system/health | grep -q '"status":"UP"'; then
-              echo "✅ SonarQube está listo";
-              break;
-            fi
-            echo "⌛ Esperando a que SonarQube esté listo... intento $i";
-            sleep 10;
-          done
-
-      - name: Ejecutar análisis SonarQube
+          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} <insert_your_clean_build_command>
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          dotnet tool install --global dotnet-sonarscanner
-          export PATH="$PATH:/home/runner/.dotnet/tools"
-          dotnet sonarscanner begin /k:"ActividadSof" /d:sonar.login="$SONAR_TOKEN" /d:sonar.host.url="http://localhost:9000"
-          dotnet build
-          dotnet sonarscanner end /d:sonar.login="$SONAR_TOKEN"
+        with:
+          args: >
+            --define sonar.cfamily.compile-commands="${{ env.BUILD_WRAPPER_OUT_DIR }}/compile_commands.json"
