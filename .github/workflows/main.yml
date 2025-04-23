@@ -20,7 +20,7 @@ jobs:
           --health-cmd="curl -f http://localhost:9000 || exit 1"
           --health-interval=10s
           --health-timeout=5s
-          --health-retries=3
+          --health-retries=5
 
     steps:
       - name: Clonar repositorio
@@ -41,12 +41,12 @@ jobs:
 
       - name: Esperar a que SonarQube esté listo
         run: |
-          for i in {1..10}; do
+          for i in {1..20}; do
             if curl -s http://localhost:9000/api/system/health | grep -q '"status":"UP"'; then
-              echo "SonarQube está listo";
+              echo "✅ SonarQube está listo";
               break;
             fi
-            echo "Esperando a que SonarQube esté listo... $i";
+            echo "⌛ Esperando a que SonarQube esté listo... intento $i";
             sleep 10;
           done
 
