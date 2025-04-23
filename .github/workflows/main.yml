@@ -10,16 +10,16 @@ jobs:
     name: Build and analyze
     runs-on: ubuntu-latest
     env:
-      BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory # Directory where build-wrapper output will be placed
+      BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0
       - name: Install Build Wrapper
         uses: SonarSource/sonarqube-scan-action/install-build-wrapper@v5
       - name: Run Build Wrapper
         run: |
-          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} <insert_your_clean_build_command>
+          build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} dotnet build
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
         env:
