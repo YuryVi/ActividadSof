@@ -1,0 +1,14 @@
+C:\Users\yury_\OneDrive\Desktop\Programacion\SoftwareSeguro\bin\Debug\net8.0\SoftwareSeguro.exe
+C:\Users\yury_\OneDrive\Desktop\Programacion\SoftwareSeguro\bin\Debug\net8.0\SoftwareSeguro.deps.json
+C:\Users\yury_\OneDrive\Desktop\Programacion\SoftwareSeguro\bin\Debug\net8.0\SoftwareSeguro.runtimeconfig.json
+C:\Users\yury_\OneDrive\Desktop\Programacion\SoftwareSeguro\bin\Debug\net8.0\SoftwareSeguro.dll
+C:\Users\yury_\OneDrive\Desktop\Programacion\SoftwareSeguro\bin\Debug\net8.0\SoftwareSeguro.pdb
+C:\Users\yury_\OneDrive\Desktop\Programacion\SoftwareSeguro\obj\Debug\net8.0\SoftwareSeguro.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\yury_\OneDrive\Desktop\Programacion\SoftwareSeguro\obj\Debug\net8.0\SoftwareSeguro.AssemblyInfoInputs.cache
+C:\Users\yury_\OneDrive\Desktop\Programacion\SoftwareSeguro\obj\Debug\net8.0\SoftwareSeguro.AssemblyInfo.cs
+C:\Users\yury_\OneDrive\Desktop\Programacion\SoftwareSeguro\obj\Debug\net8.0\SoftwareSeguro.csproj.CoreCompileInputs.cache
+C:\Users\yury_\OneDrive\Desktop\Programacion\SoftwareSeguro\obj\Debug\net8.0\SoftwareSeguro.dll
+C:\Users\yury_\OneDrive\Desktop\Programacion\SoftwareSeguro\obj\Debug\net8.0\refint\SoftwareSeguro.dll
+C:\Users\yury_\OneDrive\Desktop\Programacion\SoftwareSeguro\obj\Debug\net8.0\SoftwareSeguro.pdb
+C:\Users\yury_\OneDrive\Desktop\Programacion\SoftwareSeguro\obj\Debug\net8.0\SoftwareSeguro.genruntimeconfig.cache
+C:\Users\yury_\OneDrive\Desktop\Programacion\SoftwareSeguro\obj\Debug\net8.0\ref\SoftwareSeguro.dll
